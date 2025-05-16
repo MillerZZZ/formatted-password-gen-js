@@ -43,10 +43,14 @@ const randPwd = () => {
     return pwd.join('').slice(1);
 };
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+const isJSONrequested = urlParams.get('json') === 'true';
+
 const genedPwd = randPwd();
-if (location.href.endsWith('/pwd/'))
-    document.getElementById("rand-pwd").textContent = genedPwd;
-else if (location.href.endsWith('/pwd/json/')) {
+
+if (isJSONrequested) {
     const responseObj = {
         code: 200,
         msg: 'success',
@@ -56,3 +60,4 @@ else if (location.href.endsWith('/pwd/json/')) {
     };
     document.getElementById("rand-pwd").textContent = JSON.stringify(responseObj, null, 2);
 }
+else document.getElementById("rand-pwd").textContent = genedPwd;
