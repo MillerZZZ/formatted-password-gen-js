@@ -45,8 +45,12 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 const isJSONrequested = urlParams.get('json') === 'true';
+const isCapitalRequired = urlParams.get('capital') === 'true';
 
-const genedPwd = randPwd();
+let genedPwd = randPwd();
+
+if (isCapitalRequired)
+    genedPwd = genedPwd[0].toUpperCase() + genedPwd.slice(1);
 
 if (isJSONrequested) {
     const responseObj = {
